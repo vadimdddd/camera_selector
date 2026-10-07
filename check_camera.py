@@ -13,7 +13,7 @@
     - Расчёт требуемой мощности освещения
     - Подбор конкретной модели освещения из расширенной базы
     - Проверка бюджета
-    - Сравнение нескольких конфигураций (预设 / JSON-файл / JSON-строка)
+    - Сравнение нескольких конфигураций (предустановки / JSON-файл / JSON-строка)
     - Визуализация (FOV, DOF, бюджет, угол наклона) через matplotlib
     - Экспорт в PDF (с встроенными PNG) и CSV
     - GUI на Gradio
@@ -27,7 +27,7 @@
     python check_camera.py --help           # краткая справка argparse
     python check_camera.py [ОПЦИИ]          # одиночный расчёт
     python check_camera.py --gui            # веб-интерфейс
-    python check_camera.py --compare        #预设 конфигурации
+    python check_camera.py --compare        # предустановленные конфигурации
     python check_camera.py --compare-file configs.json
     python check_camera.py --compare-json '[...]'
 
@@ -1727,7 +1727,7 @@ EXTENDED_HELP = """
   --all                    Сохранить всё: PDF + CSV + plots.
                            Пример: --all
 
-  --compare                Сравнить 3预设 конфигурации:
+  --compare                Сравнить 3 предустановленные конфигурации:
                              Базовая (наклон 0°)
                              Наклон 15°
                              Премиум наклон 30°
@@ -1766,7 +1766,7 @@ EXTENDED_HELP = """
   4) GUI:
      python check_camera.py --gui
 
-  5) Сравнение预设:
+  5) Сравнение предустановок:
      python check_camera.py --compare
 
   6) Сравнение из файла:
@@ -1854,7 +1854,7 @@ def parse_args():
     parser.add_argument("--plots", action="store_true", help="Сохранить графики PNG")
     parser.add_argument("--all", action="store_true", help="Сохранить всё: PDF + CSV + plots")
     parser.add_argument("--compare", action="store_true",
-                        help="Сравнить 3预设 конфигурации")
+                        help="Сравнить 3 предустановленные конфигурации")
     parser.add_argument("--compare-file", type=str, default=None,
                         help="JSON-файл с конфигурациями для сравнения")
     parser.add_argument("--compare-json", type=str, default=None,
@@ -2053,7 +2053,7 @@ def run_compare_mode_from_configs(names: List[str], requirements: List[CustomerR
 
 
 def run_compare_mode_default():
-    """预设: три конфигурации."""
+    """Предустановки: три конфигурации."""
     req1 = CustomerRequirements(
         defect_size_mm=0.5, defect_type=DefectType.DISPLACEMENT,
         material=Material.METAL, reflectivity=Reflectivity.SEMI_MATTE,
@@ -2132,7 +2132,7 @@ def main():
         run_compare_mode_from_configs(names, reqs)
         return
 
-    # Compare预设
+    # Compare предустановки
     if args.compare:
         run_compare_mode_default()
         return
